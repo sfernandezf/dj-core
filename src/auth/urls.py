@@ -30,10 +30,6 @@ urlpatterns = [
     re_path(r"^password/reset/confirm/$",PasswordResetConfirmView.as_view(),name="rest_password_reset_confirm",),
     re_path(r"^password/change/$", PasswordChangeView.as_view(), name="rest_password_change" ),
 
-    # # jwt
-    # re_path(r"^token/refresh/$", refresh_jwt_token, name="token_refresh"),
-    # re_path(r"^token/verify/$", verify_jwt_token, name="token_verify"),
-
     #rest_framework_simplejwt
     re_path(r"^token/obtain/$", TokenObtainPairView.as_view(), name='token_obtain_pair'),
     re_path(r"^token/refresh/$", TokenRefreshView.as_view(), name='token_refresh'),

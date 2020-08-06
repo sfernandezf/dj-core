@@ -6,3 +6,7 @@
 src/.env
 
 venv/
+
+src/core/__pycache__/
+
+*.pyc
