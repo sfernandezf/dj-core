@@ -10,3 +10,7 @@ venv/
 src/core/__pycache__/
 
 *.pyc
+
+*__pycache__*
+
+etc/secrets*

@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from timezone_field import TimeZoneField
 
-from core.mixins.models import BaseModel
+from common.models import BaseModel
 
 
 class UserManager(BaseUserManager):

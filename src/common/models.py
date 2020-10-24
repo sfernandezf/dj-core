@@ -16,7 +16,9 @@ class BaseModel(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    created_timestamp = models.DateTimeField(_("Created At"), auto_now_add=True, 
-                                             editable=False)
-    updated_timestamp = models.DateTimeField(_("Updated At"), auto_now=True, 
-                                             editable=False)
+    created_timestamp = models.DateTimeField(
+        _("Created At"), auto_now_add=True, editable=False
+    )
+    updated_timestamp = models.DateTimeField(
+        _("Updated At"), auto_now=True, editable=False
+    )

@@ -8,15 +8,27 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
-"""
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+"""
 import os
+import sys
 import environ
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-env = environ.Env()
 
+# PROJECT DIRECTORY
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)
+# Workaround for project directory
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
+
+# ENVIRONMENT
+# django-environ (https://django-environ.readthedocs.io/en/latest/)
+env = environ.Env()
 env_file = (
     os.path.join(BASE_DIR, ".env")
     if os.path.exists(os.path.join(BASE_DIR, ".env"))
@@ -25,20 +37,27 @@ env_file = (
 environ.Env.read_env(env_file)
 ENVIRONMENT = env("ENVIRONMENT", default="local")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
+# DJANGO SECURITY
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", default=False)
-
 ALLOWED_HOSTS = env.list("ALLOWED_HOST", default=[])
 if ENVIRONMENT == "local":
     ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
 
 
+# DATABASE
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+DATABASES = {"default": env.db()}
+
+# DJANGO URLS
+ROOT_URLCONF = "core.urls"
+WSGI_APPLICATION = "core.wsgi.application"
+
+
+# DJANGO APPLICATIONS
 # Application definition
 INSTALLED_APPS += [
     "django.contrib.admin",
@@ -47,8 +66,11 @@ INSTALLED_APPS += [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "timezone_field",
 ]
 
+
+# DJANGO MIDDLEWARE
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -59,8 +81,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "core.urls"
 
+# DJANGO MIDDLEWARE
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -77,22 +99,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "core.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DATABASES = {"default": env.db()}
-
-
-# Internationalization
+# DJANGO INTERNALIZATION
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True

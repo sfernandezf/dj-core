@@ -1,12 +1,12 @@
 # django
-Django==3.0.2
+Django==3.1.2
 
 #infrastructure
 django-environ==0.4.5
 django-split-settings==1.0.0
 
 # database
-psycopg2==2.8.4
+psycopg2-binary==2.8.5
 
 # api
 djangorestframework==3.11.0

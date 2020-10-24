@@ -13,7 +13,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from django.conf import settings
-from auth.views import LoginView, LogoutView
+from apps.auth.views import LoginView, LogoutView
 
 rest_auth_registration_urls = [
     # allauth login/logout/password
