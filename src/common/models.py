@@ -22,3 +22,22 @@ class BaseModel(models.Model):
     updated_timestamp = models.DateTimeField(
         _("Updated At"), auto_now=True, editable=False
     )
+
+
+class ViewerUserMixinModel(models.Model):
+    """
+    Abstract ViewerUser Mixib Model
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._viewer_user = None
+
+    class Meta:
+        abstract = True
+
+    @property
+    def viewer_user(self):
+        return self._viewer_user
+
+    def set_viewer_user(self, user):
+        self._viewer_user = user

@@ -22,8 +22,9 @@ import environ
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
+APPS_DIR = os.path.join(BASE_DIR, 'apps')
 # Workaround for project directory
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, APPS_DIR)
 
 
 # ENVIRONMENT
