@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from rest_auth.serializers import (
     LoginSerializer as BaseLoginSerializer,
-    JWTSerializer as BaseJWTSerializer)
-from rest_auth.registration.serializers import \
-    RegisterSerializer as BaseRegisterSerializer
+    JWTSerializer as BaseJWTSerializer,
+)
+from rest_auth.registration.serializers import (
+    RegisterSerializer as BaseRegisterSerializer,
+)
 
 from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 class LoginSerializer(BaseLoginSerializer):
     username = None
@@ -24,9 +27,11 @@ class RegisterSerializer(BaseRegisterSerializer):
             "password1": self.validated_data.get("password1", ""),
         }
 
+
 class TokenResponseSerializer(serializers.Serializer):
     refresh = serializers.CharField()
     access = serializers.CharField()
+
 
 class JWTSerializer(BaseJWTSerializer):
     """

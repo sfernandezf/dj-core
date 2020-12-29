@@ -12,7 +12,7 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
         ordering = ("-created_timestamp",)
-        default_permissions = ('view', 'add', 'change', 'delete')
+        default_permissions = ("view", "add", "change", "delete")
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -28,6 +28,7 @@ class ViewerUserMixinModel(models.Model):
     """
     Abstract ViewerUser Mixib Model
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._viewer_user = None

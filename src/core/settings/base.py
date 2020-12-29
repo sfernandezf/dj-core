@@ -19,12 +19,10 @@ import environ
 
 # PROJECT DIRECTORY
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-)
-APPS_DIR = os.path.join(BASE_DIR, 'apps')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# APPS_DIR = os.path.join(BASE_DIR, 'apps')
 # Workaround for project directory
-sys.path.insert(0, APPS_DIR)
+# sys.path.insert(0, APPS_DIR)
 
 
 # ENVIRONMENT
@@ -56,20 +54,7 @@ DATABASES = {"default": env.db()}
 # DJANGO URLS
 ROOT_URLCONF = "core.urls"
 WSGI_APPLICATION = "core.wsgi.application"
-
-
-# DJANGO APPLICATIONS
-# Application definition
-INSTALLED_APPS += [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "timezone_field",
-]
-
+APPEND_SLASH = True
 
 # DJANGO MIDDLEWARE
 MIDDLEWARE = [
@@ -83,11 +68,11 @@ MIDDLEWARE = [
 ]
 
 
-# DJANGO MIDDLEWARE
+# DJANGO TEMPLATES
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join("auth", "templates", "allauth"),],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

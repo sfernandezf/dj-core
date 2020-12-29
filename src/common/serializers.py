@@ -9,14 +9,15 @@ class ModelCleanSerializer(serializers.Serializer):
     moment of calling the ``clean`` method the target instance does not exist
     yet, so it won't set any values on the target model instance.
     """
+
     def validate(self, attrs):
-        request = self.context.get('request', None)
-        method = getattr(request, 'method', None)
+        request = self.context.get("request", None)
+        method = getattr(request, "method", None)
         instance = None
 
         # simulating instance creation: we need to pop relation data and set is
         # separately
-        if method == 'POST':
+        if method == "POST":
             info = model_meta.get_field_info(self.Meta.model)
             model_attrs = dict()
             relation_attrs = dict()
@@ -38,7 +39,7 @@ class ModelCleanSerializer(serializers.Serializer):
             # self.bind_data_to_instance(instance, relation_attrs)
 
         # simulating instance update: simply bind data to the instance
-        elif method in ('PUT', 'PATCH'):
+        elif method in ("PUT", "PATCH"):
             instance = self.Meta.model.objects.get(id=self.instance.id)
             self.bind_data_to_instance(instance, attrs)
 
@@ -69,7 +70,7 @@ class ModelCleanSerializer(serializers.Serializer):
 
 class ViewerUserMixinSerializer(serializers.Serializer):
     def to_representation(self, instance):
-        user = getattr(self.context.get('request'), 'user', None)
-        if user and hasattr(instance, 'set_viewer_user'):
+        user = getattr(self.context.get("request"), "user", None)
+        if user and hasattr(instance, "set_viewer_user"):
             instance.set_viewer_user(user)
         return super().to_representation(instance)
