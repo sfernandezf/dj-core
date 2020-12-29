@@ -1,16 +1,14 @@
 from split_settings.tools import include
 
 
-INSTALLED_APPS = [
-    "users.apps.UsersConfig",
-]
-
-
 include(
     "base.py",
+    "installed_apps.py",
     "rest.py",
     "storage.py",
     "auth.py",
     "email.py",
-    "swagger.py",
+    "swagger.py"
 )
+
+

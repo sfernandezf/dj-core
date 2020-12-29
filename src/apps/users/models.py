@@ -54,4 +54,4 @@ class User(BaseModel, AbstractUser):
 
 
 class UserSettings(User):
-    timezone = TimeZoneField(default='US/Central')
+    timezone = TimeZoneField(default="US/Central")

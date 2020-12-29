@@ -1,25 +1,32 @@
-# django
+# DJANGO
 Django==3.1.2
 
-#infrastructure
-django-environ==0.4.5
-django-split-settings==1.0.0
-
-# database
-psycopg2-binary==2.8.5
-
-# api
-djangorestframework==3.11.0
-drf-yasg==1.17.0
-
-# authentication
+## django auth
 django-rest-auth==0.9.5
 django-allauth==0.41.0
 djangorestframework-simplejwt==4.4.0
 
-# tests
-pytest-django==3.8.0
+## django environments
+django-environ==0.4.5
+django-split-settings==1.0.0
 
-# others django
+# django fields
 django-timezone-field==4.0
 
+## django rest
+djangorestframework==3.11.0
+drf-yasg==1.17.0
+
+## django storages
+django-storages==1.9.1
+
+## django tests
+pytest-django==3.8.0
+
+
+# OTHERS
+## aws
+boto3==1.16.4
+
+## database
+psycopg2-binary==2.8.5

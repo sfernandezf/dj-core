@@ -13,14 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import re
+
+from django.conf.urls import static
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path, re_path, include
+from django.views.static import serve
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from django.urls import get_resolver, get_urlconf
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -32,42 +38,40 @@ schema_view = get_schema_view(
         # license=openapi.License(name="BSD License"),
     ),
     permission_classes=(permissions.AllowAny,),
-    public=True
+    public=True,
 )
 
 
 urlpatterns = [
+    # Root
+    path("", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+
     # admin
-    re_path(r"^admin", admin.site.urls),
+    re_path(r"^admin/", admin.site.urls),
     # # api
     # swagger
-    
-    re_path(
-        r"^api/$",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
-    re_path(
-        r"^swagger(?P<format>\.json|\.yaml)$",
-        schema_view.without_ui(cache_timeout=0),
-        name="schema-json",
-    ),
-    re_path(
-        r"^swagger/$",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
-    re_path(
-        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
-    ),
+    re_path(r"^api/$", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    re_path(r"^swagger(?P<format>\.json|\.yaml)$",schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    re_path(r"^swagger/$", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    re_path(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+
+    # Apps
     # auth
     re_path(r"^api/auth/", include("apps.auth.urls")),
     # users
     re_path(r"^api/users/", include(("apps.users.urls", "users"), namespace="users")),
 
-    re_path(
-        "",
-        schema_view.with_ui("swagger", cache_timeout=0),
-        name="schema-swagger-ui",
-    ),
 ]
+
+
+if settings.ENVIRONMENT == 'local':
+    urlpatterns += [
+        re_path(
+            r'^%s(?P<path>.*)$' % re.escape(settings.STATIC_URL.lstrip('/')),
+            serve, kwargs=dict(document_root=settings.STATIC_ROOT)
+        ),
+        re_path(
+            r'^%s(?P<path>.*)$' % re.escape(settings.MEDIA_URL.lstrip('/')),
+            serve, kwargs=dict(document_root=settings.MEDIA_ROOT)
+        ),
+    ]
