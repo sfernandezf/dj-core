@@ -1,5 +1,5 @@
 # DJANGO
-Django==3.1.2
+Django==3.1.10
 
 ## django auth
 django-rest-auth==0.9.5
